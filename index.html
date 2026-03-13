@@ -65,6 +65,36 @@
         button.delete {
             background: red;
         }
+        @media screen and (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            tr:first-child {
+                display: none;
+            }
+            tr {
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                padding: 10px;
+                border-radius: 8px;
+            }
+            td {
+                text-align: left;
+                padding: 8px 5px;
+                border-bottom: 1px solid #eee;
+            }
+            td:last-child, td:nth-last-child(2) {
+                display: block;
+                width: 100%;
+                border: none;
+                padding: 5px 0;
+            }
+            button.edit, button.delete {
+                width: 100%;
+                margin-bottom: 8px;
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>

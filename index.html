@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+            color: #333;
+        }
+        div {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 700px;
+        }
+        h2 {
+            color: #2c3e50;
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 97%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            width: 100%;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition:0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;    
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: none;
+        }
+        td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+        button.edit {
+            background: rgb(4, 202, 4);
+        }
+        button.delete {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Input Data Siswa</h2>
+        
+        <input type="text" id="nama" placeholder="Masukan Nama"><br>
+        <input type="text" id="rombel" placeholder="Masukan Rombel"><br>
+        <input type="number" id="nilai" placeholder="Masukan Nilai"><br>
+
+        <button onclick="tambah()">Tambah</button>
+
+        <h2>Daftar Siswa</h2>
+        <table border="">
+                <tr>
+                    <td>Nama</td>
+                    <td>Rombel</td>
+                    <td>Nilai</td>
+                    <td>Grade</td>
+                    <td>Status</td>
+                    <td>Aksi</td>
+                </tr>
+            <tbody id="tabel"></td>
+        </table>
+    </div>
+    <script>
+        let data = [];
+        
+        function tambah(){
+            let nama = document.getElementById("nama").value;
+            let rombel = document.getElementById("rombel").value;
+            let nilai = Number(document.getElementById("nilai").value);
+
+            let grade="";
+            let status="";
+
+            if(nilai>=90){
+                grade="A";
+            }else if(nilai>=80){
+                grade="B";
+            }else if(nilai>=75){
+                grade="C";
+            }else if(nilai>=60){
+                grade="D";
+            }else{
+                grade="E";
+            }
+
+            if(nilai>=75){
+                status="Lulus";
+            }else{
+                status="Tidak Lulus";
+            }
+
+            data.push({
+                nama:nama,
+                rombel:rombel,
+                nilai:nilai,
+                grade:grade,
+                status:status
+            })
+            tampil()
+        }
+
+        function tampil(){
+            let isi =[];
+
+            for(let i=0; i<data.length; i++){
+
+                isi+=`
+                <tr>
+                    <td>${data[i].nama}</td>
+                    <td>${data[i].rombel}</td>
+                    <td>${data[i].nilai}</td>
+                    <td>${data[i].grade}</td>
+                    <td>${data[i].status}</td>
+
+                    <td><button onclick = "edit(${i})" class = "edit">Edit</button></td>
+                    <td><button onclick = "hapus(${i})" class = "delete">Delete</button></td>
+                </tr>
+                `;
+            }
+            document.getElementById("tabel").innerHTML= isi;
+        }
+        function hapus(i){
+            data.splice(i,1);
+            tampil();
+        }
+        function edit(i){
+            let namaNew = prompt("Edit nama:", data[i].nama)
+            let rombelNew = prompt("Edit rombel:", data[i].rombel)
+            let nilaiNew = prompt("Edit nilai:", data[i].nilai)
+
+            let grade = "";
+            let status ="";
+
+            if(nilaiNew >= 90){
+                grade = "A"
+            } else if (nilaiNew >= 80){
+                grade = "B"
+            } else if (nilaiNew >= 75){
+                grade = "C"
+            } else if (nilaiNew >= 60){
+                grade = "D"
+            } else {
+                grade = "E"
+            }
+
+            if (nilaiNew >= 75){
+                status = "LULUS"
+            } else {
+                status = "TIDAK LULUS"
+            }
+
+            data[i]={
+                nama:namaNew,
+                rombel:rombelNew,
+                nilai:nilaiNew,
+                grade:grade,
+                status:status
+            }
+            tampil();
+        }
+
+    </script>
+</body>
+</html>

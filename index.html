@@ -122,6 +122,19 @@
     </div>
     <script>
         let data = [];
+
+        function simpanData(){
+            localStorage.setItem("datasiswa", JSON.stringify(data));
+        }
+        function ambilData(){
+            let ambil = localStorage.getItem("datasiswa");
+
+            if(ambil){
+                data = JSON.parse(ambil);
+            } else {
+                data = [];
+            }
+        }
         
         function tambah(){
             let nama = document.getElementById("nama").value;
@@ -156,6 +169,7 @@
                 grade:grade,
                 status:status
             })
+            simpanData();
             tampil()
         }
 
@@ -181,6 +195,7 @@
         }
         function hapus(i){
             data.splice(i,1);
+            simpanData();
             tampil();
         }
         function edit(i){
@@ -216,8 +231,12 @@
                 grade:grade,
                 status:status
             }
+            simpanData();
             tampil();
         }
+
+        ambilData();
+        tampil();
 
     </script>
 </body>
